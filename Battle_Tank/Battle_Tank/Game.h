@@ -11,26 +11,20 @@ class Game {
 	Menu menu;
 
 	static constexpr int ESC = 27;
-	static constexpr int sleepDuration = 70;
-
-	static constexpr int player1StratingX = 70;
-	static constexpr int player1StratingY = 70;
-
-	static constexpr int player2StratingX = 70;
-	static constexpr int player2StratingY = 70;
+	static constexpr int sleepDuration = 300;
 
 	int totalTime = 0;
 	bool shouldExit = false; // Flag to check if the game should exit
 	bool shouldQuit = false; // Flag to check if the game should quit
 
 	bool pausingGameMenu(Board& board);
-	void handleKeyPress(Tank& player, Board& board, bool& shouldExit);
+	void handleKeyPress(Tank& player1, Tank& player2, Board& board, bool& shouldExit);
 	void exitGameMenu();
 	void showInstructionsMenu();
 	void deathMenu(int playerWon, int playerLost);
 	/*void manageLife(Tank& player);*/
 public:
-	
+
 	void startingMenu();
 
 	void run() {
@@ -46,5 +40,6 @@ public:
 	void runGameLoop(std::string boardFileName, Tank& player1, Tank& player2, Board& board);
 	void deathAnimation(Tank& player);
 	void checkCollsionsWithPlayer(Tank& player, ShellManager& shellManager);
+	bool checkPressP(Tank& player, char key);
 };
 

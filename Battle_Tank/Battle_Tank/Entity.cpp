@@ -23,6 +23,13 @@ void Entity::restoreErasedPoints() {
     }
 }
 
-void Entity::touchingWalls() {
-
+bool Entity::touchingWalls() {
+    // check if the wall is on the right or left
+    if (pBoard->isWall(pBoard->getChar(newXPosition, newYPosition))) {
+        return true;
+    }
+    // check if the wall is up or down
+    /*if (pBoard->isWall(pBoard->getChar(x, newYPosition))) {
+        return true;
+    }*/
 }

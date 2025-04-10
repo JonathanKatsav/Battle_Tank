@@ -1,34 +1,29 @@
 ﻿#include "Tank.h"
 
 
-//TODO: need to splitn  into keys and set the diractions correctly
-void Tank::keyPressed(char key) {
-	char savedCurrKey = currentKey;
-    for (size_t i = 0; i < sizeof(Tank::keys); i++) {
-        if (std::tolower(key) == Tank::keys[i]) {
-            currentKey = Tank::keys[i];
-        }
-    }
 
+void Tank::keyPressed(char key) {
+    char savedCurrKey = currentKey;
+    
     if (prevKey != savedCurrKey)
         prevKey = savedCurrKey;
 
     switch (currentKey) {
     case 'e': case 'o':
-		setRightTrack(Forward);
+        setRightTrack(Forward);
         break;
     case 'd': case 'l':
-		setRightTrack(Backward);   
+        setRightTrack(Backward);
         break;
     case 'q': case 'u':
-		setLeftTrack(Forward);
+        setLeftTrack(Forward);
         break;
     case 'a': case 'j':
-		setLeftTrack(Backward);
+        setLeftTrack(Backward);
         break;
     case 's': case 'k':
-		setLeftTrack(Stop);
-		setRightTrack(Stop);
+        setLeftTrack(Stop);
+        setRightTrack(Stop);
         break;
     case 'w': case 'i':
         setLeftTrack(Stop);
@@ -42,21 +37,33 @@ void Tank::keyPressed(char key) {
 
 //TODO
 void Tank::move() {
-    if (leftTrack == Forward == rightTrack) {
+    if (leftTrack == Forward && rightTrack == Forward) {
         moveForward();
     }
-    else if (leftTrack == Backward == rightTrack) {
+    else if (leftTrack == Backward && rightTrack == Backward) {
         moveBackward();
     }
-    else
-    rotatCanon();
+    else if (leftTrack == Stop && rightTrack == Stop) {
+        newXPosition = x;
+        newYPosition = y;
 
-    
+    }
+    else
+        rotatCanon();
+
+    if (touchingWalls()) {
+        newXPosition = x;
+        newYPosition = y;
+    }
+    setCanonLocation();
+
+
+    //TODO: adding checks to the movments of the tank (canon ristrictions and stuff) 
 
 
     // Call the move function of the Object class
     Entity::move();
-	this->cannon.move(canonDirection, x, y);
+    this->canon.move(canonDirection, x, y);
 }
 
 void Tank::eraseAndMovePlayer(Tank& player) {
@@ -67,105 +74,109 @@ void Tank::eraseAndMovePlayer(Tank& player) {
 void Tank::rotatCanon() {
     // Rotating "slow" clockwise
     if (leftTrack == Forward && rightTrack == Stop) {
-        if(!CanonWallCheck(Clockwise))
-        canonDirection = static_cast<CanonDirection>((static_cast<int>(canonDirection) + 1 + 8) % 8);
+        if (!CanonWallCheck(Clockwise))
+            canonDirection = static_cast<CanonDirection>((static_cast<int>(canonDirection) + 1 + 8) % 8);
     }
     else if (leftTrack == Stop && rightTrack == Backward) {
         if (!CanonWallCheck(Clockwise))
-        canonDirection = static_cast<CanonDirection>((static_cast<int>(canonDirection) + 1 + 8) % 8);
+            canonDirection = static_cast<CanonDirection>((static_cast<int>(canonDirection) + 1 + 8) % 8);
     }
     // Rotating "fast" clockwise
     else if (leftTrack == Forward && rightTrack == Backward) {
         if (!CanonWallCheck(ClockwiseFast))
-        canonDirection = static_cast<CanonDirection>((static_cast<int>(canonDirection) + 2 + 8) % 8);
+            canonDirection = static_cast<CanonDirection>((static_cast<int>(canonDirection) + 2 + 8) % 8);
     }
     // Rotating "slow" counter clockwise
     else if (leftTrack == Backward && rightTrack == Stop) {
         if (!CanonWallCheck(CounterClockwise))
-        canonDirection = static_cast<CanonDirection>((static_cast<int>(canonDirection) - 1 + 8) % 8);
+            canonDirection = static_cast<CanonDirection>((static_cast<int>(canonDirection) - 1 + 8) % 8);
     }
     else if (leftTrack == Stop && rightTrack == Forward) {
         if (!CanonWallCheck(CounterClockwise))
-        canonDirection = static_cast<CanonDirection>((static_cast<int>(canonDirection) - 1 + 8) % 8);
+            canonDirection = static_cast<CanonDirection>((static_cast<int>(canonDirection) - 1 + 8) % 8);
     }
     // Rotating "fast" counter clockwise
     else if (leftTrack == Backward && rightTrack == Forward) {
         if (!CanonWallCheck(CounterClockwiseFast))
-        canonDirection = static_cast<CanonDirection>((static_cast<int>(canonDirection) - 2 + 8) % 8);
+            canonDirection = static_cast<CanonDirection>((static_cast<int>(canonDirection) - 2 + 8) % 8);
     }
 }
 
 void Tank::moveForward() {
-	if (canonDirection == Up)
-        setnewYPosition(getY() - 1);
-	
+   int  fullScreenX = this->pBoard->screenX;
+   int  fullScreenY = this->pBoard->screenY;
+    if (canonDirection == Up)
+        setnewYPosition((fullScreenY + (getY() - 1)) % fullScreenY);
+
     else if (canonDirection == Down)
-        setnewYPosition(getY() + 1);
-	
+        setnewYPosition((fullScreenY + (getY() + 1)) % fullScreenY);
+
     else if (canonDirection == Left)
-        setnewXPosition(getX() - 1);
-	
+        setnewXPosition((fullScreenX + (getX() - 1)) % fullScreenX);
+
     else if (canonDirection == Right)
-        setnewXPosition(getX() + 1);
-	
+        setnewXPosition((fullScreenX + (getX() + 1)) % fullScreenX);
+
     else if (canonDirection == UpRight) {
-        setnewXPosition(getX() + 1);
-        setnewYPosition(getY() - 1);
+        setnewXPosition((fullScreenX + (getX() + 1)) % fullScreenX);
+        setnewYPosition((fullScreenY + (getY() - 1)) % fullScreenY);
     }
     else if (canonDirection == DownRight) {
-        setnewXPosition(getX() + 1);
-        setnewYPosition(getY() + 1);
+        setnewXPosition((fullScreenX + (getX() + 1)) % fullScreenX);
+        setnewYPosition((fullScreenY + (getY() + 1)) % fullScreenY);
     }
-	else if (canonDirection == DownLeft) {
-		setnewXPosition(getX() - 1);
-		setnewYPosition(getY() + 1);
-	}
-	else if (canonDirection == UpLeft) {
-		setnewXPosition(getX() - 1);
-		setnewYPosition(getY() - 1);
-	}
+    else if (canonDirection == DownLeft) {
+        setnewXPosition((fullScreenX + (getX() - 1)) % fullScreenX);
+        setnewYPosition((fullScreenY + (getY() + 1)) % fullScreenY);
+    }
+    else if (canonDirection == UpLeft) {
+        setnewXPosition(getX() - 1);
+        setnewYPosition((fullScreenY + (getY() - 1)) % fullScreenY);
+    }
 }
 
 void Tank::moveBackward() {
+    int  fullScreenX = this->pBoard->screenX;
+    int  fullScreenY = this->pBoard->screenY;
     if (canonDirection == Up)
-        setnewYPosition(getY() + 1);
-
+        setnewYPosition((fullScreenY + (getY() + 1)) % fullScreenY);
+    
     else if (canonDirection == Down)
-        setnewYPosition(getY() - 1);
+        setnewYPosition((fullScreenY + (getY() - 1)) % fullScreenY);
 
     else if (canonDirection == Left)
-        setnewXPosition(getX() + 1);
+        setnewXPosition((fullScreenX + (getX() + 1)) % fullScreenX);
 
     else if (canonDirection == Right)
-        setnewXPosition(getX() - 1);
+        setnewXPosition((fullScreenX + (getX() - 1)) % fullScreenX);
 
     else if (canonDirection == UpRight) {
-        setnewXPosition(getX() - 1);
-        setnewYPosition(getY() + 1);
+        setnewXPosition((fullScreenX + (getX() - 1)) % fullScreenX);
+        setnewYPosition((fullScreenY + (getY() + 1)) % fullScreenY);
     }
     else if (canonDirection == DownRight) {
-        setnewXPosition(getX() - 1);
-        setnewYPosition(getY() - 1);
+        setnewXPosition((fullScreenX + (getX() - 1)) % fullScreenX);
+        setnewYPosition((fullScreenY + (getY() - 1)) % fullScreenY);
     }
     else if (canonDirection == DownLeft) {
-        setnewXPosition(getX() + 1);
-        setnewYPosition(getY() - 1);
+        setnewXPosition((fullScreenX + (getX() + 1)) % fullScreenX);
+        setnewYPosition((fullScreenY + (getY() - 1)) % fullScreenY);
     }
     else if (canonDirection == UpLeft) {
         setnewXPosition(getX() + 1);
-        setnewYPosition(getY() + 1);
+        setnewYPosition((fullScreenY + (getY() + 1)) % fullScreenY);
     }
 }
 
 bool Tank::CanonWallCheck(const Rotation& rotation) {
     //checking Up position for the cannon
     if (rotation == Clockwise && canonDirection == Up)
-		return (pBoard->isWall(pBoard->getChar(x + 1, y - 1)));
+        return (pBoard->isWall(pBoard->getChar(x + 1, y - 1)));
     else if (rotation == ClockwiseFast && canonDirection == Up)
         return (pBoard->isWall(pBoard->getChar(x + 1, y)));
     else if (rotation == CounterClockwise && canonDirection == Up)
         return (pBoard->isWall(pBoard->getChar(x - 1, y - 1)));
-	else if (rotation == CounterClockwiseFast && canonDirection == Up)
+    else if (rotation == CounterClockwiseFast && canonDirection == Up)
         return (pBoard->isWall(pBoard->getChar(x - 1, y)));
 
     //checking Down position for the cannon
@@ -239,10 +250,102 @@ bool Tank::CanonWallCheck(const Rotation& rotation) {
         return (pBoard->isWall(pBoard->getChar(x - 1, y + 1)));
 }
 
-void Tank::draw() { 
+void Tank::draw() {
     restoreErasedPoints();
     printToScreen(x, y, ch);
-    this->cannon.draw();
+    this->canon.draw();
 }
 
-    
+void Tank::erase() {
+    restoreErasedPoints();
+    printToScreen(x, y, emptyChar);
+    this->canon.erase();
+}
+
+void Tank::setCanonLocation() {
+    switch (this->canonDirection) {
+    case Up:
+        if (pBoard->isWall(pBoard->getChar(newXPosition, newYPosition - 1))) {
+			setnewXPosition(x);
+			setnewYPosition(y);
+        }	
+        else {
+            canon.setXValue(this->newXPosition);
+            canon.setYValue((this->newYPosition) - 1);
+        }
+        break;
+    case UpRight:
+        if (pBoard->isWall(pBoard->getChar(newXPosition + 1, newYPosition - 1))) {
+            setnewXPosition(x);
+            setnewYPosition(y);
+        }
+        else {
+            canon.setXValue((this->newXPosition) + 1);
+            canon.setYValue((this->newYPosition) - 1);
+        }
+        break;
+    case Right:
+        if (pBoard->isWall(pBoard->getChar(newXPosition + 1, newYPosition))) {
+            setnewXPosition(x);
+            setnewYPosition(y);
+        }
+        else {
+            canon.setXValue((this->newXPosition) + 1);
+            canon.setYValue((this->newYPosition));
+        }
+        break;
+    case DownRight:
+        if (pBoard->isWall(pBoard->getChar(newXPosition + 1, newYPosition + 1))) {
+            setnewXPosition(x);
+            setnewYPosition(y);
+        }
+        else {
+            canon.setXValue((this->newXPosition) + 1);
+            canon.setYValue((this->newYPosition) + 1);
+        }
+        break;
+    case Down:
+		if (pBoard->isWall(pBoard->getChar(newXPosition, newYPosition + 1))) {
+			setnewXPosition(x);
+			setnewYPosition(y);
+		}
+        else {
+            canon.setXValue(this->newXPosition);
+            canon.setYValue((this->newYPosition) + 1);
+        }
+        break;
+    case DownLeft:
+		if (pBoard->isWall(pBoard->getChar(newXPosition - 1, newYPosition + 1))) {
+			setnewXPosition(x);
+			setnewYPosition(y);
+		}
+		else {
+			canon.setXValue((this->newXPosition) - 1);
+			canon.setYValue((this->newYPosition) + 1);
+		}
+        break;
+    case Left:
+		if (pBoard->isWall(pBoard->getChar(newXPosition - 1, newYPosition))) {
+			setnewXPosition(x);
+			setnewYPosition(y);
+		}
+        else {
+            canon.setXValue((this->newXPosition) - 1);
+            canon.setYValue((this->newYPosition));
+        }
+        break;
+    case UpLeft:
+		if (pBoard->isWall(pBoard->getChar(newXPosition - 1, newYPosition - 1))) {
+			setnewXPosition(x);
+			setnewYPosition(y);
+		}
+        else {
+            canon.setXValue((this->newXPosition) - 1);
+            canon.setYValue((this->newYPosition) - 1);
+        }
+        break;
+    }
+}
+
+
+

@@ -4,4 +4,52 @@ C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Batt
 C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\Board.cpp(17,27): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\Board.cpp(47,49): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\Board.cpp(53,49): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Canon.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.38.33130\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+  Entity.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.38.33130\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+  Game.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.38.33130\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\ShellManager.h(28,71): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\Game.cpp(203,49): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  main.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.38.33130\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\ShellManager.h(28,71): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'main.cpp')
+  
+  Menu.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.38.33130\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\Menu.cpp(78,22): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\Menu.cpp(81,18): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\Menu.cpp(83,19): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  ShellManager.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.38.33130\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\ShellManager.h(28,71): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'ShellManager.cpp')
+  
+C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\ObstaclesManager.h(18,42): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'ShellManager.cpp')
+  C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\ObstaclesManager.h(18,42):
+  the template instantiation context (the oldest one first) is
+  	C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\ShellManager.h(7,29):
+  	see reference to class template instantiation 'ObstaclesManager<Shell>' being compiled
+  	C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\ObstaclesManager.h(18,9):
+  	while compiling class template member function 'int ObstaclesManager<Shell>::getSize(void)'
+  		C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\ShellManager.cpp(14,18):
+  		see the first reference to 'ObstaclesManager<Shell>::getSize' in 'ShellManager::add'
+  
+  Shells.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.38.33130\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+  Tank.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.38.33130\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+  utils.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.38.33130\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\ShellManager.h(28,71): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'utils.cpp')
+  
+  Generating Code...
+C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\Tank.cpp(251): warning C4715: 'Tank::CanonWallCheck': not all control paths return a value
+C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\Battle_Tank\Entity.cpp(35): warning C4715: 'Entity::touchingWalls': not all control paths return a value
   Battle_Tank.vcxproj -> C:\Users\jonat\Desktop\Study\1 University\2 second year\second semester\C++\Battle_Tank\Battle_Tank\x64\Debug\Battle_Tank.exe

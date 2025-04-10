@@ -79,6 +79,6 @@ void ObstaclesManager<T>::erase() {
 template <typename T>
 void ObstaclesManager<T>::draw() {
     for (auto& obstacle : obstacles)
-        obstacle.Draw();
+        obstacle.draw();
 }
 

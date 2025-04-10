@@ -19,13 +19,13 @@ constexpr char playerChar = 'O';
 constexpr char canonUp = '|';
 constexpr char canonLeanRight = '/';
 constexpr char canonLeanLeft = '\\';
-constexpr char canonD = '-';
+constexpr char canonLean = '-';
 constexpr char emptyChar = ' ';
 
 
 enum Players {
-    First,
-    Second,
+	First,
+	Second,
 };
 
 enum CanonDirection {

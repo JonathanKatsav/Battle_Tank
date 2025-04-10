@@ -14,8 +14,7 @@ void Game::runGameLoop(std::string boardFilesName, Tank& player1, Tank& player2,
 
         while (!shouldExit) {
 
-            handleKeyPress(player1, board, shouldExit);
-            handleKeyPress(player2, board, shouldExit);
+            handleKeyPress(player1,player2, board, shouldExit);
 
             player1.draw();
             player2.draw();
@@ -28,15 +27,15 @@ void Game::runGameLoop(std::string boardFilesName, Tank& player1, Tank& player2,
             here we will add the shoots erase and move
             */
 
-            checkCollsionsWithPlayer(player1, shellManager);
-            checkCollsionsWithPlayer(player2, shellManager);
+            /*checkCollsionsWithPlayer(player1, shellManager);
+            checkCollsionsWithPlayer(player2, shellManager);*/
 
             // Erase and move players
             player1.eraseAndMovePlayer(player1);
             player2.eraseAndMovePlayer(player2);
 
-            checkCollsionsWithPlayer(player1, shellManager);
-            checkCollsionsWithPlayer(player2, shellManager);
+            //checkCollsionsWithPlayer(player1, shellManager);
+            //checkCollsionsWithPlayer(player2, shellManager);
         }
     }
 };
@@ -49,15 +48,15 @@ void Game::startingMenu() {
         menu.startingMenu();
 
         int userInput = getUserInput();
-        
+
 
         clearConsole();
         switch (userInput) {
         case 1: {
             Board board;
-            
-            startGame("Play_Ground");
-            
+
+            startGame("BT_screen.screen");
+
             break;
         }
         case 6:
@@ -109,13 +108,16 @@ void Game::startGame(std::string boardFileName) {
     ShowConsoleCursor(false);
     Board board;
 
-    Tank player1(&board, player1StratingX, player1StratingY);
-	player1.setPlayerNum(First);
+    Tank player1(&board);
+    player1.setPlayerNum(First);
     player1.setKeys("edqasw");
+    player1.setNumKeys();
 
-    Tank player2(&board, player2StratingX, player2StratingY);
+    Tank player2(&board);
     player2.setPlayerNum(Second);
     player2.setKeys("olujki");
+    player2.setNumKeys();
+
 
     //Time timer;
 
@@ -154,7 +156,7 @@ bool Game::pausingGameMenu(Board& board) {
         return false;
 }
 
-void Game::handleKeyPress(Tank& player, Board& board, bool& shouldExit) {
+void Game::handleKeyPress(Tank& player1, Tank& player2, Board& board, bool& shouldExit) {
     if (_kbhit()) {
         char key = _getch();
         if (key == ESC) {
@@ -165,9 +167,10 @@ void Game::handleKeyPress(Tank& player, Board& board, bool& shouldExit) {
                 shouldExit = false;
             }
         }
-        else {
-            player.keyPressed(key);
-        }
+        else if (checkPressP(player1, key))
+			player1.keyPressed(key);
+		else if (checkPressP(player2, key))
+			player2.keyPressed(key);
     }
 }
 
@@ -193,6 +196,18 @@ void Game::deathMenu(int playerWon, int playerLost) {
     shouldExit = true;
     startingMenu();
 }
+
+bool Game::checkPressP(Tank& player, char key) {
+	size_t size = player.getNumKeys();
+    for (size_t i = 0; i < size; i++) {
+        if (std::tolower(key) == player.getkeys(i)) {
+            player.setCurrentKey(key);
+            return true;
+        }
+    }
+        return false;
+}
+
 
 //void Game::manageLife(Tank& player) {
 //

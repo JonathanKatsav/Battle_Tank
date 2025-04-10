@@ -56,7 +56,7 @@ bool Board::load(const std::string& filename, Tank& player1, Tank& player2) {
                     break;
                 }
                 else {
-                    menu.showInvalidBoardMessage(filename, "Error: Multiple Mario characters found on the board.");
+                    menu.showInvalidBoardMessage(filename, "Error: to many players on the board");
                     return false;
                 }
             default:
@@ -78,14 +78,14 @@ bool Board::load(const std::string& filename, Tank& player1, Tank& player2) {
         originalBoard[curr_row][screenX] = '\0';
     }
 
-    std::fill_n(originalBoard[0], screenX, strongWall);
+    /*std::fill_n(originalBoard[0], screenX, strongWall);
     originalBoard[0][screenX] = '\0';
 
     std::fill_n(originalBoard[screenY - 1], screenX, strongWall);
-    originalBoard[screenY - 1][screenX] = '\0';
+    originalBoard[screenY - 1][screenX] = '\0';*/
 
     reset();
-    
+
 
     if (!isTherePlayer2)
         menu.showInvalidBoardMessage(filename, "Error: not enough players on the board");

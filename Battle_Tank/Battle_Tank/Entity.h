@@ -8,9 +8,9 @@ public:
 	struct Direction {
 		int x, y;
 	};
-	
+
 	static constexpr Direction directions[] = { {0, -1}, {-1, 0}, {0, 1}, {1, 0}, {0, 0} };
-	
+
 protected:
 
 	Direction dir{ 0, 0 };
@@ -31,11 +31,6 @@ protected:
 	int startingPositionY = 0;
 
 	void restoreErasedPoints();
-
-	virtual void touchingWalls();
-		
-	void setXValue(int newX) { x = newX; }
-	void setYValue(int newY) { y = newY; }
 
 	void draw(char c) {
 		restoreErasedPoints();
@@ -60,6 +55,8 @@ public:
 
 	void setChar(char c) { ch = c; }
 	void setBoard(Board& board) { pBoard = &board; }
+	void setXValue(int newX) { x = newX; }
+	void setYValue(int newY) { y = newY; }
 
 	int getX() const { return x; }
 	int getY() const { return y; }
@@ -74,7 +71,7 @@ public:
 	int getStartingPositionY() const { return startingPositionY; }
 
 
-	void setStartingPosition(int x, int y) {
+	virtual void setStartingPosition(int x, int y) {
 		startingPositionX = x;
 		startingPositionY = y;
 
@@ -90,8 +87,11 @@ public:
 		printToScreen(x, y, ch);
 	}
 
-	void erase() {
+	virtual void erase() {
 		printToScreen(x, y, emptyChar);
 	}
+
+	bool touchingWalls();
+
 };
 
